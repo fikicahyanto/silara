@@ -19,9 +19,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth','admin'])->group(function () {
+    Route::get('admin', function (){
+        return 'admin page';
+    });
+});
+
 Route::get('/user' , [UserController::class, 'index']);
 
 Route::get('dosen', [DosenController::class, 'index']);
 Route::get('dosen/create', [DosenController::class, 'create']);
 Route::post('dosen', [DosenController::class,'store']);
+Route::resource('dosen', DosenController::class);
+Route::get('dosen/edit/{id}',[DosenController::class, 'edit']);
+Route::post('dosen/update/{id}', [DosenController::class,'update']);
+Route::post('dosen/{id}', [DosenController::class,'destroy']);
 
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
