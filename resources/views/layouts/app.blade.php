@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Evaluasi Dosen</title>
     <!-- Custom fonts for this template-->
     <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -386,13 +384,19 @@
             var id= $(this).val();
             $.get(url + '/' + id, function (data) {
                 //success data
-                $('#id').val(data.id);
-                $('#nidn').val(data.nidn);
-                $('#nama_dosen').val(data.nama_dosen);
-                $('#btn-save').val("update");
+                $('.modal-title').html('Edit');
                 $('#modal-content').html(data);
-                $('#EditModal').modal('show');
+                $('.main_modal').modal('show');
             }) 
+        });
+        $('#btn-add').on('click', function(){
+                var url = "dosen/create";
+                $.get(url , function (data) {
+                    //success data
+                    $('.modal-title').html('Tambah');
+                    $('#modal-content').html(data);
+                    $('.main_modal').modal('show');
+                }) 
         });
     </script>
 </body>

@@ -1,21 +1,20 @@
-@extends('template.header')
-@section('content')
-
-<div class="bg-light p-5 rounded">
-</div>
 {{ Form::open(array('url' => 'dosen', 'method' => 'POST')) }}
-  <tr>
-    <td>NIDN</td>
-    <td> {{ FORM::text('nidn',null,['class'=>'form-control','placeholder'=>'nidn'])}}</td>
-  </tr>
-  <tr>
-    <td>Nama Dosen</td>
-    <td> {{ FORM::text('nama_dosen',null,['class'=>'form-control','placeholder'=>'nidn'])}}</td>
-  </tr>
-  {{ Form::submit('Simpan Data',['class' => 'btn btn-primary'])}}
-  {{-- {{ Form::button('Kembali',['class'=>'btn btn-warning'])}} --}}
-  <a class="btn btn-warning" href="{{ route('dosen.index') }}">Back</a>
-{{ Form::close() }}
-@endsection
-
-@extends('template.footer')
+@csrf
+  <div class="form-group row">
+    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">NIDN</label>
+    <div class="col-sm-10">
+    {{ FORM::text('nidn',null,['class'=>'form-control','placeholder'=>'Nidn'])}}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama Dosen</label>
+    <div class="col-sm-10">
+    {{ FORM::text('nama_dosen',null,['class'=>'form-control','placeholder'=>'Nama Dosen'])}}
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="formFile" class="col-sm-2 col-form-label col-form-label-sm">Upload File</label>
+    <div class="col-sm-10">
+      <input class="form-control" type="file" id="formFile">
+    </div>
+  </div>

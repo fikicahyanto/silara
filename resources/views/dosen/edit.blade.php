@@ -13,8 +13,4 @@
             {{ FORM::text('nama_dosen',$lecture->nama_dosen,['id' => 'nama_dosen','class'=>'form-control','placeholder'=>'nama dosen'])}}
         </div>
     </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-{{ Form::submit('Save',['id' => 'btn-save', 'class' => 'btn btn-primary'])}}             
-{{ Form::close() }}
+    
