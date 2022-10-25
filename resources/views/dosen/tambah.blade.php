@@ -7,14 +7,13 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama Dosen</label>
+    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">NAMA DOSEN</label>
     <div class="col-sm-10">
     {{ FORM::text('nama_dosen',null,['class'=>'form-control','placeholder'=>'Nama Dosen'])}}
     </div>
   </div>
-  <div class="form-group row">
-    <label for="formFile" class="col-sm-2 col-form-label col-form-label-sm">Upload File</label>
-    <div class="col-sm-10">
-      <input class="form-control" type="file" id="formFile">
-    </div>
-  </div>
+</div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+    {{ Form::submit('Save',['class' => 'btn btn-primary'])}}             
+    {{ Form::close() }}

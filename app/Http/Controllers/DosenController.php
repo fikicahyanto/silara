@@ -37,7 +37,7 @@ class DosenController extends Controller
     }
 
     public function destroy($id) {
-        $lecture = Dosen::find($id);
+        $lecture = Dosen::findOrFail($id);
         $lecture->delete();
         Session::flash('message','Data Berhasil Dihapus');
         return redirect('dosen');

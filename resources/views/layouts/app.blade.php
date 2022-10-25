@@ -355,7 +355,71 @@
         <main>
             @yield('content')
         </main>
-
+        <!-- Add & Edit Modal-->
+        <div class="modal fade main_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div id="modal-content" class="modal-body">
+                
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Delete Modal-->
+        <div class="modal fade DeleteModal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Yakin ingin dihapus ?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    {{ Form::open(array('url' => '', 'method' => 'POST', 'class'=>'')) }} 
+                    @csrf
+                    @method('DELETE')
+                    {{ Form::hidden('id',null,['id'=>'id-destroy'])}}
+                    {{ Form::submit('Delete',['class' => 'btn btn-danger'])}}             
+                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
@@ -378,26 +442,7 @@
     <!-- Page level custom scripts -->
     <script src="/assets/js/demo/datatables-demo.js"></script>
 
-    <script type="text/javascript">
-        $(document).on('click','.editModal',function(){
-            var url = "dosen/edit";
-            var id= $(this).val();
-            $.get(url + '/' + id, function (data) {
-                //success data
-                $('.modal-title').html('Edit');
-                $('#modal-content').html(data);
-                $('.main_modal').modal('show');
-            }) 
-        });
-        $('#btn-add').on('click', function(){
-                var url = "dosen/create";
-                $.get(url , function (data) {
-                    //success data
-                    $('.modal-title').html('Tambah');
-                    $('#modal-content').html(data);
-                    $('.main_modal').modal('show');
-                }) 
-        });
-    </script>
+    @yield('script')
+
 </body>
 </html>
