@@ -31,7 +31,11 @@
                         <tr>
                             <td>{{$value->nidn}}</td>
                             <td>{{$value->nama_dosen}}</td>
-                            <td>{{$value->file}}</td>
+                            @if($value->files == '')
+                                <td><i class="fas fa-fw fa-image"></i></td>
+                            @else
+                                <td><img src="{{ Storage::url('assets/files/').$value->files }}" class="rounded" style="width: 50px"></td>
+                            @endif
                             <td>27</td>
                             <td>2011/01/25</td>
                             <td><button class="btn btn-warning editModal" value="{{$value->id}}">edit</button> 
@@ -76,6 +80,7 @@
         var id = $(this).attr('data-id');
         var url = "dosen/" + id;
         $('#id-destroy').val(id);
+        $('.modal-title').html('Delete');
         $('.DeleteModal form').attr('action', url);
     });
 </script>

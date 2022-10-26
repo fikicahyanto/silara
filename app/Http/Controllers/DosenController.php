@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DosenUpdateRequest;
 use Session;
 use App\models\Dosen;
+use Illuminate\Support\Facades\Storage;
 
 class DosenController extends Controller
 {
@@ -19,9 +20,20 @@ class DosenController extends Controller
     }
 
     public function store(Request $request){
-        Dosen::create($request->all());
-        return redirect('dosen');
+        $name_file = '';
+        if($request->file('files')){
+            $file = $request->file('files');
+            $name_file = $file->getClientOriginalName();
+            $file = $file->storeAs('assets/files',$name_file, "public");
+        }
+        Dosen::create([
+            'nidn' => $request->nidn,
+            'nama_dosen' => $request->nama_dosen,
+            'files' => $name_file
+        ]);
 
+        return redirect('dosen');
+        // Dosen::create($request->all());
     }
 
     public function edit($id){
@@ -31,13 +43,28 @@ class DosenController extends Controller
 
     public function update($id, Request $request) {
         $lecture = Dosen::find($id);
-        $lecture->update($request->all());
+        if($request->file('files')){
+            Storage::disk('public')->delete('assets/files/'.$lecture->files); 
+            $file = $request->file('files');
+            $name_file = $file->getClientOriginalName();
+            $file = $file->storeAs('assets/files',$name_file,"public");
+        }else{
+            $name_file = $lecture->files;    
+        }
+        $updateData = [
+            'nidn' => $request->nidn,
+            'nama_dosen' => $request->nama_dosen,
+            'files' => $name_file
+        ];
+        $lecture->update($updateData);
+        
         Session::flash('message','Data Berhasil Diubah');
         return redirect('dosen');
     }
 
     public function destroy($id) {
         $lecture = Dosen::findOrFail($id);
+        Storage::disk('public')->delete('assets/files/'.$lecture->files); 
         $lecture->delete();
         Session::flash('message','Data Berhasil Dihapus');
         return redirect('dosen');
