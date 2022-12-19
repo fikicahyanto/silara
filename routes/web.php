@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use App\Http\Controllers\DosenController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('beranda');
 });
 
 Route::middleware(['auth','admin'])->group(function () {
@@ -35,9 +36,13 @@ Route::get('dosen/edit/{id}',[DosenController::class, 'edit']);
 Route::post('dosen/update/{id}', [DosenController::class,'update']);
 Route::post('dosen/{id}', [DosenController::class,'destroy']);
 
-
-
-
+Route::get('mahasiswa', [MahasiswaController::class, 'index']);
+Route::get('mahasiswa/create', [MahasiswaController::class, 'create']);
+Route::post('mahasiswa', [MahasiswaController::class,'store']);
+Route::resource('mahasiswa', MahasiswaController::class);
+Route::get('mahasiswa/edit/{id}',[MahasiswaController::class, 'edit']);
+Route::post('mahasiswa/update/{id}', [MahasiswaController::class,'update']);
+Route::post('mahasiswa/{id}', [MahasiswaController::class,'destroy']);
 
 
 Auth::routes();

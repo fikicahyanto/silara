@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class DosenController extends Controller
 {
     public function index(){
-        $data['lecture'] = Dosen::all();
+        $data['lecture'] = Dosen::orderBy('id','ASC')->get();
         return view('dosen.index', $data);
     }
 
@@ -26,14 +26,26 @@ class DosenController extends Controller
             $name_file = $file->getClientOriginalName();
             $file = $file->storeAs('assets/files',$name_file, "public");
         }
-        Dosen::create([
+        $validated = $request->validate([
+            'nidn' => 'required',
+            'nama_dosen' => 'required',
+        ]);
+        $post = Dosen::create([
             'nidn' => $request->nidn,
             'nama_dosen' => $request->nama_dosen,
             'files' => $name_file
         ]);
-
-        return redirect('dosen');
-        // Dosen::create($request->all());
+        if($post){
+            toast('Data Berhasil Ditambah','success');
+            return redirect('dosen');
+        }else{
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with([
+                    'error' => 'Some problem occurred, please try again'
+                ]);
+        }
     }
 
     public function edit($id){
@@ -58,7 +70,7 @@ class DosenController extends Controller
         ];
         $lecture->update($updateData);
         
-        Session::flash('message','Data Berhasil Diubah');
+        toast('Data Berhasil Diubah','success');
         return redirect('dosen');
     }
 
@@ -66,7 +78,7 @@ class DosenController extends Controller
         $lecture = Dosen::findOrFail($id);
         Storage::disk('public')->delete('assets/files/'.$lecture->files); 
         $lecture->delete();
-        Session::flash('message','Data Berhasil Dihapus');
+        toast('Data Berhasil Dihapus','success');
         return redirect('dosen');
     }
 }

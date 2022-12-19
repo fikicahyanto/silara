@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+@include('sweetalert::alert')
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -18,6 +20,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>NO</th>
                             <th>NIDN</th>
                             <th>Nama Dosen</th>
                             <th>File</th>
@@ -27,8 +30,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $no = 1; @endphp
                         @foreach ($lecture as $value)
                         <tr>
+                            <td>{{$no++}}</td>
                             <td>{{$value->nidn}}</td>
                             <td>{{$value->nama_dosen}}</td>
                             @if($value->files == '')
@@ -61,6 +66,7 @@
         var url = "dosen/create";
         $.get(url , function (data) {
         //success data
+        // console.log(data);
         $('.modal-title').html('Tambah');
         $('#modal-content').html(data);
         $('.main_modal').modal('show');

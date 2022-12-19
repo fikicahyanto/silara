@@ -1,15 +1,23 @@
 {{ Form::open(array('url' => 'dosen', 'files' => true, 'enctype' => 'multipart/form-data', 'method' => 'POST')) }}
 @csrf
   <div class="form-group row">
-    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">NIDN</label>
+    <label for="nidn" class="col-sm-2 col-form-label col-form-label-sm">NIDN</label>
     <div class="col-sm-10">
-    {{ FORM::text('nidn',null,['class'=>'form-control','placeholder'=>'Nidn'])}}
+      <input type="text" id="nidn" name="nidn" class="form-control @error('nidn') is-invalid @enderror" value="{{old('nidn')}}" placeholder="Nidn">
+    {{-- {{ FORM::text('nidn',null,['class'=>'form-control @error('nidn') is-invalid @enderror','id' => 'nidn','placeholder'=>'Nidn'])}} --}}
+            @error('nidn')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
     </div>
   </div>
   <div class="form-group row">
     <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Nama Dosen</label>
     <div class="col-sm-10">
-    {{ FORM::text('nama_dosen',null,['class'=>'form-control','placeholder'=>'Nama Dosen'])}}
+      <input type="text" id="nama_dosen" name="nama_dosen" class="form-control @error('nama_dosen') is-invalid @enderror" value="{{old('nama_dosen')}}" placeholder="Nama Dosen">
+    {{-- {{ FORM::text('nama_dosen',null,['class'=>'form-control','placeholder'=>'Nama Dosen'])}} --}}
+        @error('nama_dosen')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
     </div>
   </div>
   <div class="form-group row">
